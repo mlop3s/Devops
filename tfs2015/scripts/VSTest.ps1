@@ -39,18 +39,18 @@ else
 }
 
 $codeCoverage = Convert-String $codeCoverageEnabled Boolean
-
 if($testAssemblyFiles)
 {
-	Write-Warning "Calling Invoke-VSTest for version 16.0 for all test assemblies"
-    Write-Verbose -Verbose "Calling Invoke-VSTest for all test assemblies"
+	Write-Warning "testAssemblyFiles = $testAssemblyFiles"
+	Write-Warning "Calling Invoke-VSTest for version 16.0 for all listed test assemblies"
     $vsTestVersion = "16.0"
     $artifactsDirectory = Get-TaskVariable -Context $distributedTaskContext -Name "System.ArtifactsDirectory" -Global $FALSE
 
     $workingDirectory = $artifactsDirectory
     $testResultsDirectory = $workingDirectory + "\" + "TestResults"
     $diagFile = $workingDirectory + "\" + "diagnostic.txt"
-	$overrideTestrunParameters = "--Diag:$diagFile --Paralell -- RunConfiguration.TestSessionTimeout=10000"
+	$otherConsoleOptions = "/InIsolation /Parallel /Diag:$diagFile"
+	$pathtoCustomTestAdapters = "C:\TestAdapters"
     Invoke-VSTest -TestAssemblies $testAssemblyFiles -VSTestVersion $vsTestVersion -TestFiltercriteria $testFiltercriteria -RunSettingsFile $runSettingsFile -PathtoCustomTestAdapters $pathtoCustomTestAdapters -CodeCoverageEnabled $codeCoverage -OverrideTestrunParameters $overrideTestrunParameters -OtherConsoleOptions $otherConsoleOptions -WorkingFolder $workingDirectory -TestResultsFolder $testResultsDirectory
 
     $resultFiles = Find-Files -SearchPattern "*.trx" -RootFolder $testResultsDirectory 
