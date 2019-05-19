@@ -58,7 +58,9 @@ if (!$solutionFiles)
     throw (Get-LocalizedString -Key "No solution was found using search pattern '{0}'." -ArgumentList $solution)
 }
 
-$args = $msbuildArguments;
+Write-Warning "disabling multi-threaded build"
+$args = "$msbuildArgs /m:1"
+
 if ($platform)
 {
     Write-Verbose "adding platform: $platform"
@@ -101,6 +103,7 @@ if (-not $nugetPath -and $nugetRestore)
     Write-Warning (Get-LocalizedString -Key "Unable to locate {0}. Package restore will not be performed for the solutions" -ArgumentList 'nuget.exe')
 }
 
+Write-Warning "using $args for build"
 foreach ($sf in $solutionFiles)
 {
     if ($nugetPath -and $nugetRestore)
