@@ -38,7 +38,20 @@ else
     $testAssemblyFiles = ,$testAssembly
 }
 
-$codeCoverage = Convert-String $codeCoverageEnabled Boolean
+if (!$testFiltercriteria)
+{
+	$testFiltercriteria = 'TestCategory!=Integration'
+}
+
+$diagFile = $workingDirectory + "\" + "diagnostic.txt"
+
+if (!$otherConsoleOptions)
+{
+	$otherConsoleOptions = "/Blame"
+}
+
+#$codeCoverage = Convert-String $codeCoverageEnabled Boolean
+$codeCoverage = Convert-String "false" Boolean
 if($testAssemblyFiles)
 {
 	Write-Warning "testAssemblyFiles = $testAssemblyFiles"
@@ -48,8 +61,9 @@ if($testAssemblyFiles)
 
     $workingDirectory = $artifactsDirectory
     $testResultsDirectory = $workingDirectory + "\" + "TestResults"
-    $diagFile = $workingDirectory + "\" + "diagnostic.txt"
-	$otherConsoleOptions = "/InIsolation /Parallel /Diag:$diagFile"
+	$env:Path += "$workingDirectory\DEV\DEVMAIN\SDKs\misc;$workingDirectory\DEV\DEVMAIN\SDKs\Ssce5532_02\dll;$workingDirectory\DEV\DEVMAIN\SDKs\Fingerprint SDK 2009\Bin;$workingDirectory\DEV\DEVMAIN\SDKs\LTWIN90X\REDIST;$workingDirectory\DEV\DEVMAIN\SDKs\CxImage90\bin;$workingDirectory\DEV\DEVMAIN\SDKs\Xtreme ToolkitPro v16.3.1\Bin\vc140;$workingDirectory\DEV\DEVMAIN\SDKs\OpenSSL\bin;$workingDirectory\DEV\DEVMAIN\SDKs\ObjG601_6080\Bin\vc140;$workingDirectory\DEV\DEVMAIN\Nexus\MF\libs\Oracle-11.2.0.3.20_x86\instantclient_11_2;$workingDirectory\DEV\DEVMAIN\SDKs\ocilib-4.5.1-windows\lib32;"
+
+    Write-Warning "Using environment path= $env:Path"
 	$pathtoCustomTestAdapters = "C:\TestAdapters"
     Invoke-VSTest -TestAssemblies $testAssemblyFiles -VSTestVersion $vsTestVersion -TestFiltercriteria $testFiltercriteria -RunSettingsFile $runSettingsFile -PathtoCustomTestAdapters $pathtoCustomTestAdapters -CodeCoverageEnabled $codeCoverage -OverrideTestrunParameters $overrideTestrunParameters -OtherConsoleOptions $otherConsoleOptions -WorkingFolder $workingDirectory -TestResultsFolder $testResultsDirectory
 
