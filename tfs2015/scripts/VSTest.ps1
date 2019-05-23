@@ -50,8 +50,8 @@ if (!$otherConsoleOptions)
 	$otherConsoleOptions = "/Blame"
 }
 
-#$codeCoverage = Convert-String $codeCoverageEnabled Boolean
-$codeCoverage = Convert-String "false" Boolean
+$codeCoverage = Convert-String $codeCoverageEnabled Boolean
+#$codeCoverage = Convert-String "false" Boolean
 if($testAssemblyFiles)
 {
 	Write-Warning "testAssemblyFiles = $testAssemblyFiles"
@@ -61,9 +61,10 @@ if($testAssemblyFiles)
 
     $workingDirectory = $artifactsDirectory
     $testResultsDirectory = $workingDirectory + "\" + "TestResults"
-	$env:Path += "$workingDirectory\DEV\DEVMAIN\SDKs\misc;$workingDirectory\DEV\DEVMAIN\SDKs\Ssce5532_02\dll;$workingDirectory\DEV\DEVMAIN\SDKs\Fingerprint SDK 2009\Bin;$workingDirectory\DEV\DEVMAIN\SDKs\LTWIN90X\REDIST;$workingDirectory\DEV\DEVMAIN\SDKs\CxImage90\bin;$workingDirectory\DEV\DEVMAIN\SDKs\Xtreme ToolkitPro v16.3.1\Bin\vc140;$workingDirectory\DEV\DEVMAIN\SDKs\OpenSSL\bin;$workingDirectory\DEV\DEVMAIN\SDKs\ObjG601_6080\Bin\vc140;$workingDirectory\DEV\DEVMAIN\Nexus\MF\libs\Oracle-11.2.0.3.20_x86\instantclient_11_2;$workingDirectory\DEV\DEVMAIN\SDKs\ocilib-4.5.1-windows\lib32;"
+	$sdkFolder = "$workingDirectory\DEV\DEVMAIN\SDKs"
+	$env:Path += "$sdkFolder\CxImage90\bin;$sdkFolder\CxImage90\bin;$sdkFolder\GrFinger\Bin;$sdkFolder\GrFinger\Bin;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\Xtreme ToolkitPro v16.3.1\Bin\vc140;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\ObjG601_6080\Bin\vc140;$sdkFolder\OpenSSL\bin;$sdkFolder\OpenSSL\bin;$sdkFolder\misc;$sdkFolder\misc;$sdkFolder\ocilib-4.5.1-windows\lib32;C:\OracleRuntime;"
 
-    Write-Warning "Using environment path= $env:Path"
+    Write-Warning "Using environment Path=$env:Path"
 	$pathtoCustomTestAdapters = "C:\TestAdapters"
     Invoke-VSTest -TestAssemblies $testAssemblyFiles -VSTestVersion $vsTestVersion -TestFiltercriteria $testFiltercriteria -RunSettingsFile $runSettingsFile -PathtoCustomTestAdapters $pathtoCustomTestAdapters -CodeCoverageEnabled $codeCoverage -OverrideTestrunParameters $overrideTestrunParameters -OtherConsoleOptions $otherConsoleOptions -WorkingFolder $workingDirectory -TestResultsFolder $testResultsDirectory
 
