@@ -63,7 +63,8 @@ if($testAssemblyFiles)
     $testResultsDirectory = $workingDirectory + "\" + "TestResults"
 	$repo = "$workingDirectory\QS"
 	
-	if(![System.IO.File]::Exists($repo)){
+	if(![System.IO.Directory]::Exists($repo)){
+	    Write-Warning "$repo not found. Using DEVMAIN..."
 		$repo = "$workingDirectory\DEV\DEVMAIN"
 	}
 	

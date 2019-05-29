@@ -61,6 +61,11 @@ if (!$solutionFiles)
 Write-Warning "disabling multi-threaded build"
 $args = "$msbuildArgs /m:1"
 
+if ($nugetRestore)
+{
+	$args = "$args /restore"
+}
+
 if ($platform)
 {
     Write-Verbose "adding platform: $platform"
