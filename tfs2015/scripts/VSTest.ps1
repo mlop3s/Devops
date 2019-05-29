@@ -61,8 +61,15 @@ if($testAssemblyFiles)
 
     $workingDirectory = $artifactsDirectory
     $testResultsDirectory = $workingDirectory + "\" + "TestResults"
-	$sdkFolder = "$workingDirectory\DEV\DEVMAIN\SDKs"
-	$env:Path += "$sdkFolder\CxImage90\bin;$sdkFolder\CxImage90\bin;$sdkFolder\GrFinger\Bin;$sdkFolder\GrFinger\Bin;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\Xtreme ToolkitPro v16.3.1\Bin\vc140;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\ObjG601_6080\Bin\vc140;$sdkFolder\OpenSSL\bin;$sdkFolder\OpenSSL\bin;$sdkFolder\misc;$sdkFolder\misc;$sdkFolder\ocilib-4.5.1-windows\lib32;C:\OracleRuntime;"
+	$repo = "$workingDirectory\QS"
+	
+	if(![System.IO.File]::Exists($repo)){
+		$repo = "$workingDirectory\DEV\DEVMAIN"
+	}
+	
+	$sdkFolder = "$repo\SDKs"
+	$frameworkFolder = "$repo\Nexus\MF\libs\Framework-1.0.0"
+	$env:Path += "$frameworkFolder;$sdkFolder\CxImage90\bin;$sdkFolder\CxImage90\bin;$sdkFolder\GrFinger\Bin;$sdkFolder\GrFinger\Bin;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\Xtreme ToolkitPro v16.3.1\Bin\vc140;$sdkFolder\LTWIN90X\REDIST;$sdkFolder\ObjG601_6080\Bin\vc140;$sdkFolder\OpenSSL\bin;$sdkFolder\OpenSSL\bin;$sdkFolder\misc;$sdkFolder\misc;$sdkFolder\ocilib-4.5.1-windows\lib32;C:\OracleRuntime;"
 
     Write-Warning "Using environment Path=$env:Path"
 	$pathtoCustomTestAdapters = "C:\TestAdapters"
